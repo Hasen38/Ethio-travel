@@ -9,8 +9,11 @@ class Package extends Model
 {
     protected $fillable = [
         'name',
+        'destination_id',
         'description',
-        'image_url',
+        'image',
+        'duration',
+        'price',
     ];
 
     public function destinations(){
