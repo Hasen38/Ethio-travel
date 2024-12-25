@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Package;
 use App\Models\Destination;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,11 @@ return view('travel.home',compact('destinations'));
     }
 
     public function show($id){
-       $destination = Destination::where('id', $id)->firstOrFail();
-        $packages = $destination->packages;
+       $destination = Destination::with('Package')->where('id', $id)->firstOrFail();
+        $packages = $destination->package;
        return view('travel.show', compact('destination','packages'));
+    }
+    public function Makebooking($id){
+        return view('travel.booking');
     }
 }

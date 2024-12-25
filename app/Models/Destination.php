@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Package;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Destination extends Model
 {
@@ -13,7 +14,8 @@ class Destination extends Model
         'image_url',
     ];
 
-public function packages(){
+public function package():HasMany
+{
     return $this->hasMany(Package::class);
 }
 

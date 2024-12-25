@@ -1,34 +1,34 @@
 @extends('layouts.app')
 
  @section('content')
-    <div class="container mx-auto py-10 text-center">
-        <h1 class="text-4xl font-bold text-blue-600">Welcome to Travel & Tour</h1>
-        <p class="mt-4 text-xl">Explore the world with our best travel packages!</p>
-        <div class="mt-10">
-            <a href="/destinations" class="bg-blue-600 text-white py-2 px-6 rounded-full hover:bg-blue-500">Explore Destinations</a>
+ <div class="container mx-auto py-10 text-center">
+     <h1 class="text-4xl font-bold text-blue-600">Welcome to Travel & Tour</h1>
+     <p class="mt-4 text-xl">Explore the world with our best travel packages!</p>
+     <div class="mt-10">
+         <a href="/destinations" class="bg-blue-600 text-white py-2 px-6 rounded-full hover:bg-blue-500">Explore Destinations</a>
         </div>
     </div>
-      <!-- Main Content -->
-      <!-- Hero Section -->
-      <section class="relative w-full h-96 bg-cover bg-center" style="background-image: url('https://example.com/hero-image.jpg');">
-          <div class="absolute inset-0 bg-black opacity-50"></div>
-          <div class="container mx-auto h-full flex items-center justify-center text-center text-white">
-              <div>
-                  <h1 class="text-5xl font-bold leading-tight">Discover Your Next Adventure</h1>
-                  <p class="mt-4 text-xl">Explore the best destinations with exclusive offers and personalized tours.</p>
-                  <a href="/destinations" class="mt-6 inline-block bg-blue-600 text-white py-3 px-8 rounded-full text-lg hover:bg-blue-500">Start Your Journey</a>
-              </div>
-          </div>
-      </section>
+    <!-- Main Content -->
+    <!-- Hero Section -->
+    <section class="relative w-full h-96 bg-cover bg-center" style="background-image: url('https://example.com/hero-image.jpg');">
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="container mx-auto h-full flex items-center justify-center text-center text-white">
+            <div>
+                <h1 class="text-5xl font-bold leading-tight">Discover Your Next Adventure</h1>
+                <p class="mt-4 text-xl">Explore the best destinations with exclusive offers and personalized tours.</p>
+                <a href="/destinations" class="mt-6 inline-block bg-blue-600 text-white py-3 px-8 rounded-full text-lg hover:bg-blue-500">Start Your Journey</a>
+            </div>
+        </div>
+    </section>
 
-      <!-- Destinations Section -->
-      <section class="py-16 bg-gray-100">
-          @foreach ($destinations as $destination)
+    <!-- Destinations Section -->
+    <section class="py-16 bg-gray-100">
 
-          <div class="container mx-auto text-center">
-              <h2 class="text-3xl font-bold text-blue-600">Explore Our Top Destinations</h2>
-              <p class="mt-2 text-lg">Find your next dream destination from our curated list of must-see places.</p>
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold text-blue-600">Explore Our Top Destinations</h2>
+            <p class="mt-2 text-lg">Find your next dream destination from our curated list of must-see places.</p>
 
+            @foreach ($destinations as $destination)
               <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-10">
                   <!-- Destination Card 1 -->
                   <div class="bg-white shadow-lg rounded-lg overflow-hidden">
@@ -40,29 +40,29 @@
                         </div>
                     </div>
 
-                    @endforeach
-                  {{-- <!-- Destination Card 2 -->
-                  <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                      <img src="https://example.com/new-york-image.jpg" alt="New York" class="w-full h-48 object-cover">
-                      <div class="p-6">
-                          <h3 class="text-xl font-semibold">New York</h3>
-                          <p class="mt-2 text-gray-600">The city that never sleeps, with vibrant culture and iconic attractions.</p>
-                          <a href="/destinations/new-york" class="mt-4 inline-block text-blue-600 hover:underline">Explore New York</a>
-                      </div>
-                  </div>
+                    {{-- <!-- Destination Card 2 -->
+                    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                        <img src="https://example.com/new-york-image.jpg" alt="New York" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold">New York</h3>
+                            <p class="mt-2 text-gray-600">The city that never sleeps, with vibrant culture and iconic attractions.</p>
+                            <a href="/destinations/new-york" class="mt-4 inline-block text-blue-600 hover:underline">Explore New York</a>
+                        </div>
+                    </div>
 
-                  <!-- Destination Card 3 -->
-                  <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                      <img src="https://example.com/tokyo-image.jpg" alt="Tokyo" class="w-full h-48 object-cover">
-                      <div class="p-6">
-                          <h3 class="text-xl font-semibold">Tokyo</h3>
-                          <p class="mt-2 text-gray-600">A blend of tradition and modernity with bustling streets and serene temples.</p>
-                          <a href="{{route('')}}" class="mt-4 inline-block text-blue-600 hover:underline">Explore Tokyo</a>
-                      </div>
-                  </div> --}}
-              </div>
-          </div>
-      </section>
+                    <!-- Destination Card 3 -->
+                    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                        <img src="https://example.com/tokyo-image.jpg" alt="Tokyo" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold">Tokyo</h3>
+                            <p class="mt-2 text-gray-600">A blend of tradition and modernity with bustling streets and serene temples.</p>
+                            <a href="{{route('')}}" class="mt-4 inline-block text-blue-600 hover:underline">Explore Tokyo</a>
+                        </div>
+                    </div> --}}
+                </div>
+                @endforeach
+            </div>
+        </section>
 
       <!-- Best Offers Section -->
       <section class="py-16 bg-blue-600 text-white">

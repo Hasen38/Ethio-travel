@@ -12,6 +12,7 @@ Route::get('/', [Travelcontroller::class,'index']);
 
 // Route::view('/home', 'home');
 Route::get('/travel/{id}',[Travelcontroller::class,'show'])->name('travel.show');
+Route::get('/bookings/{id}',[Travelcontroller::class,'Makebooking'])->name('travel.book');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
