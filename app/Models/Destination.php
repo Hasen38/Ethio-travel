@@ -14,7 +14,7 @@ class Destination extends Model
         'image_url',
     ];
 
-public function package():HasMany
+public function packages():HasMany
 {
     return $this->hasMany(Package::class);
 }

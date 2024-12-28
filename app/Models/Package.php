@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Package extends Model
 {
     protected $fillable = [
-        'name',
+        'user_id',
         'destination_id',
+        'name',
         'description',
         'image',
         'duration',
@@ -18,5 +19,9 @@ class Package extends Model
 
     public function destinations(){
         return $this->belongsTo(Destination::class);
+    }
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
     }
 }

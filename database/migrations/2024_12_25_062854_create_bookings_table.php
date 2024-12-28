@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Package::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->integer('phone_number');
             $table->decimal('num_guests');
             $table->date('booking_date');
+            $table->string('package');
             $table->string('status')->default('pending');
             $table->timestamps();
         });
