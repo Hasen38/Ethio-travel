@@ -36,7 +36,7 @@
                       <div class="p-6">
                           <h3 class="text-xl font-semibold">{{$destination->name}}</h3>
                           <p class="mt-2 text-gray-600">A city of romance, art, and iconic landmarks like the Eiffel Tower.</p>
-                          <a href="{{route('travel.show',$destination)}}" class="mt-4 inline-block text-blue-600 hover:underline">Explore Paris</a>
+                          <a href="{{route('travel.show',$destination->id)}}" class="mt-4 inline-block text-blue-600 hover:underline">Explore Paris</a>
                         </div>
                     </div>
 
