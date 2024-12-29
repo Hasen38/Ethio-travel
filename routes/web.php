@@ -5,6 +5,7 @@ use App\Http\Controllers\Stripecontroller;
 use App\Http\Controllers\Travelcontroller;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\users\Usercontroller;
 
 // Route::get('/dashboard', function () {
     //     return view('dashboard');
@@ -24,12 +25,15 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
  Route::get('/travel/{id}',[Travelcontroller::class,'show'])->name('travel.show');
  Route::get('/bookings/{id}',[Travelcontroller::class,'Makebooking'])->name('travel.book');
- Route::post('/bookings/{id}',[Travelcontroller::class,'storeReservation'])->name('travel.store');
+ Route::post('/bookings/{id}',[Travelcontroller::class,'store'])->name('travel.store');
+ Route::get('users/my-bookings', [UserController::class, 'bookings'])->name('users.booking');
+ Route::get('/payments/success', function () {
+    return view('payments.success');
+})->name('payments.success');
 
- Route::post('/stripe',[Stripecontroller::class,'stripe'])->name('payments.store');
- Route::get('/create',[Stripecontroller::class,'create'])->name('create');
- Route::get('/success',[Stripecontroller::class,'success'])->name('success');
- Route::get('/cancel',[Stripecontroller::class,'cancel'])->name('cancel');
+Route::get('/payments/cancel', function () {
+    return view('payments.cancel');
+})->name('payments.cancel');
 });
 
 

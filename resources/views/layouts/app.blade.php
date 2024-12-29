@@ -20,15 +20,27 @@
                     <li><a href="/register" class="hover:underline">Register</a></li>
                     @endguest
                     @auth
-                    <li><a href="/users/my-bookings" class="hover:underline">My Booking</a></li>
-                    <li><form action="{{route('logout')}}" method="POST">@csrf<button type="submit" class="hover:underline">Logout</button></form></li>
+                    <li class="relative">
+                        <div x-data="{ open: false }" @click="open = !open" class="cursor-pointer">
+                            <span> {{ Auth::user()->name }}</span>
+                        <ul x-show = "open" class="absolute bg-white text-black mt-2 space-y-2 p-2 rounded shadow-lg ">
+                            <li><span><a href="/users/my-bookings" class="hover:underline">My-Booking</a></span></li>
+                            <li>
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="hover:underline">Logout</button>
+                                </form>
+                            </li>
+                        </div>
+                        </ul>
+                            </li>
+                        </ul>
+                    </li>
                     @endauth
                 </ul>
             </nav>
         </div>
     </header>
-
-
     <main>
    @yield('content')
     </main>
