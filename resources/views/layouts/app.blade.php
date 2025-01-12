@@ -24,7 +24,7 @@
                         <li class="relative">
                             <div x-data="{ open: false }">
                                 <span @click="open = !open" class="cursor-pointer">{{ Auth::user()->name }}</span>
-                                <ul x-show="open" class="absolute bg-white text-black mt-2 space-y-2 p-2 rounded shadow-lg">
+                                <ul x-show="open" class="absolute bg-white text-black mt-2 space-y-2 p-2 rounded shadow-lg z-10">
                                     <li><a href="/users/my-bookings" class="hover:text-gray-700">My Bookings</a></li>
                                     <li>
                                         <form action="{{ route('logout') }}" method="POST">
