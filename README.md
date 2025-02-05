@@ -2,18 +2,22 @@
 
 A brief and exciting description of what your project does.  (Replace this with your actual description!)
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://your-ci-service.com)  (Optional: Add badges for build status, test coverage, etc.)
 
-## Table of Contents
+## Features
 
-- [Installation](#installation)
-- [Features](#features)
+1-user registration and login
+2-reset password
+2-Tour
+3-packages
+4-booking
+5-Secure online payment gateway integration (credit card, debit card, PayPal, etc.)
+
 
 ## Installation <a name="installation"></a>
 
-Provide clear and concise installation instructions.  Be specific!
+clone the Repository
 
-**Using pip (for Python projects):**
+** git clone https://github.com/Hasen38/Ethio-travel.git **
 
 ```bash
 pip install myawesomeproject
