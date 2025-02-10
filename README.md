@@ -16,9 +16,9 @@ This repository contains the source code for the travel agency website, a platfo
 
 clone the Repository
 
-```bash
-pip install myawesomeproject
-
+ ```bash
+ git clone [https://github.com/hasen38/Ethio-travel.git]
+ ```
 2. Go to project directory
 
 ```
