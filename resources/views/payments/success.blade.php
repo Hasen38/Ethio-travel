@@ -8,8 +8,9 @@
 </head>
 <body>
     <div class="container">
-        <div class="alert alert-success mt-5">
+        <div class="mt-5 alert alert-success">
             <h1>Payment Successful!</h1>
+            {{-- <h3>{{$booking->name}}</h3> --}}
             <p>Thank you for your payment. Your transaction has been completed successfully.</p>
             <a href="{{ url('/') }}" class="btn btn-primary">Return to Home</a>
         </div>

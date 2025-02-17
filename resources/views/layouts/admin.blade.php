@@ -7,18 +7,14 @@
     @vite('resources/css/app.css')
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="text-gray-900 bg-gray-100">
     <div class="flex min-h-screen">
-        <aside class="w-64 bg-gray-800 text-white">
+        <aside class="w-64 text-white bg-gray-800">
             @include('partials.sidebar')
         </aside>
-        <div class="flex-1 flex flex-col">
-            <header class="bg-white shadow p-4">
-                <div class="flex-1 p-6">
-                    <div class="mb-4">
-                    </div>
-            </header>
-                <main class="bg-white p-6 rounded-lg shadow">
+        <div class="flex flex-col flex-1">
+
+                <main class="p-6 bg-white rounded-lg shadow">
                     @yield('content')
                 </main>
             </div>
