@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(Destination::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->text('description');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('duration');
             $table->decimal('price');
             $table->timestamps();
