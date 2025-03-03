@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Stripe\Stripe;
-use Stripe\customer;
 use App\Models\Booking;
 use App\Models\Package;
 use App\Models\Destination;
@@ -12,113 +11,108 @@ use Stripe\Checkout\Session;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class Travelcontroller extends Controller
+class TravelController extends Controller
 {
-
     public function index()
     {
         $destinations = Destination::latest()->paginate(5);
-        return view('travel.home', compact('destinations'));
+        $packages = Package::where('is_special', true)->get();
+        return view('Travel.home', compact('destinations', 'packages'));
     }
 
     public function show($id)
     {
+        $destination = Destination::findOrFail($id);
         $packages = Package::where('destination_id', $id)->get();
-        return view('travel.show', compact('packages'));
+        return view('Travel.show', compact('packages', 'destination'));
     }
+
     public function Makebooking($id)
     {
-        $package = Package::find($id);
-        $user = Auth::id();
-        return view('travel.booking', compact('package', 'user'));
+        $package = Package::findOrFail($id);
+        return view('Travel.booking', compact('package'));
     }
-    // public function storeReservation(Request $request, $id)
-    // {
 
-    //     $package = Package::find($id);
-
-    //     Booking::create([
-    //         'package_id' => $package->id,
-    //         'name' => $request->name,
-    //         'phone_number' => $request->phone_number,
-    //         'num_guests' => $request->num_guests,
-    //         'booking_date' => $request->booking_date,
-    //         'price' => $package->price * $request->num_guests,
-    //         'user_id' => Auth::id(),
-    //     ]);
-
-    //     return redirect()->route('payments.store', ['package_id' => $package->id]);
-    // }
-    public function store(Request $request,$id)
+    public function store(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:20',
+            'num_guests' => 'required|integer|min:1',
+            'booking_date' => 'required|date|after:today',
+        ]);
+
+        // Set Stripe API key
         Stripe::setApiKey(env('STRIPE_TEST_SK'));
 
-        $package = Package::find($id);
-        $totalPrice = (int)$request->num_guests * (int)$package->price;
-$lineItems = [];
-$lineItems []= [
-    'price_data' => [
-        'currency' => 'usd',
-        'product_data' => [
-            'name' => $package->name,
-            'description' => $package->description,
+        // Get package
+        $package = Package::findOrFail($id);
+
+        // Create Stripe checkout session
+        $session = Session::create([
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'usd',
+                    'product_data' => [
+                        'name' => $package->name,
+                        'description' => "Booking for {$request->num_guests} guests on {$request->booking_date}",
                     ],
-                    'unit_amount' => $package->price * 100,
+                    'unit_amount' => (int)($package->price * 100), // Convert to cents
                 ],
-                'quantity' => 1,
-            ];
-            $session = Session::create([
-                'line_items'=>$lineItems,
-                'payment_method_types' => ['card'],
-                'mode' => 'payment',
-                'success_url' => route('payments.success',[],true).'?session_id={CHECKOUT_SESSION_ID}',
-                'cancel_url' => route('payments.cancel',[],true),
-            ]);
-            $booking = new Booking();
-                $booking->name = $package->name;
-                $booking->phone_number = $request->phone_number;
-                $booking->num_guests = $request->num_guests;
-                $booking->booking_date = $request->booking_date;
-                // 'package_id' = $package->id,
-                $booking->user_id = Auth::id();
-                $booking->session_id = $session->id;
-                $booking->status = 'pending';
-                $booking->save();
-            return redirect($session->url, 303);
-        }
+                'quantity' => (int)$request->num_guests,
+            ]],
+            'mode' => 'payment',
+            'success_url' => route('payments.success', [], true) . "?session_id={CHECKOUT_SESSION_ID}",
+            'cancel_url' => route('payments.cancel', [], true),
+        ]);
+
+        // Create booking record
+        Booking::create([
+            'package_id' => $id,
+            'user_id' => Auth::id(),
+            'name' => $request->name,
+            'phone_number' => $request->phone_number,
+            'num_guests' => $request->num_guests,
+            'booking_date' => $request->booking_date,
+            'status' => 'pending',
+            'session_id' => $session->id,
+        ]);
+
+        return redirect($session->url);
+    }
 
     public function success(Request $request)
     {
+        $sessionId = $request->get('session_id');
+        if (!$sessionId) {
+            throw new NotFoundHttpException();
+        }
+
         Stripe::setApiKey(env('STRIPE_TEST_SK'));
 
-        $sessionId = $request->get('session_id');
-        $customer= null;
-
         try {
-$session = Session::retrieve($sessionId);
+            $session = Session::retrieve($sessionId);
+            $booking = Booking::where('session_id', $session->id)
+                ->where('status', 'pending')
+                ->firstOrFail();
 
-if(!$session){
-    throw new NotFoundHttpException();
-}
-$customer = customer::retrieve($session->customer);
+            // Check if payment was actually successful
+            if ($session->payment_status === 'paid') {
+                Booking::create([
 
-$booking = Booking::where('session_id', $session->id)->where('status','pending')->first();
+                    'status' => 'paid',
+                ]);
+                return view('payments.success', ['booking' => $booking]);
+            }
 
-if(!$booking){
-    throw new NotFoundHttpException();
-}
-    $booking->status = 'Paid';
-    $booking->save();
+            throw new NotFoundHttpException('Payment was not successful');
+        } catch (\Exception $e) {
+            throw new NotFoundHttpException('Invalid session or booking not found');
+        }
+    }
 
-return view('payments.success', compact('customer'));
-} catch (\Exception $e) {
-    throw new NotFoundHttpException();
-}
-}
     public function cancel()
-
     {
         return view('payments.cancel');
     }
-
 }
