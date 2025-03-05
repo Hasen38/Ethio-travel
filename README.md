@@ -4,7 +4,7 @@ This repository contains the source code for the travel agency website, a platfo
 
 [Watch Demo video](https://youtu.be/yjoGlbUIK5I)
 
-##Screenshots
+#Screenshots.
 ![Hero](![Screenshot 2025-03-05 134636](https://github.com/user-attachments/assets/a01ba0cb-308c-4590-ac5a-17b67211fbb1)
 )
 ![Services](![Screenshot 2025-03-05 133806](https://github.com/user-attachments/assets/bc8a4be3-f5c7-4769-8af0-abaf7820b3fb)
